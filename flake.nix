@@ -36,7 +36,8 @@
       devShells.${system}.default = pkgs.mkShell {
         # install packages
         packages = (with pkgs; [
-          # may put other pkgs here
+          libssh2
+          pkg-config
         ]) ++ [ zig ];
 
         # setup shell

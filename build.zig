@@ -1,6 +1,11 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
+    const libgit2 = b.dependency("libgit2", .{
+        .@"enable-ssh" = true,
+        .@"tls-backend" = .openssl,
+    });
+
     const bin = b.addExecutable(.{
         .name = "git_thing",
         .root_module = b.createModule(.{
@@ -14,6 +19,7 @@ pub fn build(b: *std.Build) void {
 
     bin.addIncludePath(b.path("include"));
     bin.addLibraryPath(b.path("include"));
+    bin.linkLibrary(libgit2.artifact("git2"));
 
     for ([_][]const u8 {
         //may put c libs here
